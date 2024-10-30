@@ -31,7 +31,7 @@
                         </v-fab-transition>
                     </template>
 
-                    <DeliveryDelivery :offline="offline" class="video-card" :isNew="true" :editMode="true" v-model="newValue" @add="append" v-if="tick"/>
+                    <OrderOrder :offline="offline" class="video-card" :isNew="true" :editMode="true" v-model="newValue" @add="append" v-if="tick"/>
                 
                     <v-btn
                             style="postition:absolute; top:2%; right:2%"
@@ -50,12 +50,12 @@
 
 <script>
     const axios = require('axios').default;
-    import DeliveryDelivery from './../DeliveryDelivery.vue';
+    import OrderOrder from './../OrderOrder.vue';
 
     export default {
-        name: 'DeliveryDeliveryManager',
+        name: 'OrderOrderManager',
         components: {
-            DeliveryDelivery,
+            OrderOrder,
         },
         props: {
             offline: Boolean,
@@ -67,12 +67,14 @@
             headers: 
                 [
                     { text: "id", value: "id" },
-                    { text: "address", value: "address" },
+                    { text: "productId", value: "productId" },
+                    { text: "qty", value: "qty" },
                     { text: "customerId", value: "customerId" },
-                    { text: "quantity", value: "quantity" },
-                    { text: "orderId", value: "orderId" },
+                    { text: "amount", value: "amount" },
+                    { text: "status", value: "status" },
+                    { text: "address", value: "address" },
                 ],
-            delivery : [],
+            order : [],
             newValue: {},
             tick : true,
             openDialog : false,
@@ -83,15 +85,17 @@
                 return;
             }
 
-            var temp = await axios.get(axios.fixUrl('/deliveries'))
-            temp.data._embedded.deliveries.map(obj => obj.id=obj._links.self.href.split("/")[obj._links.self.href.split("/").length - 1])
-            this.values = temp.data._embedded.deliveries;
+            var temp = await axios.get(axios.fixUrl('/orders'))
+            temp.data._embedded.orders.map(obj => obj.id=obj._links.self.href.split("/")[obj._links.self.href.split("/").length - 1])
+            this.values = temp.data._embedded.orders;
 
             this.newValue = {
-                'address': '',
+                'productId': '',
+                'qty': 0,
                 'customerId': '',
-                'quantity': 0,
-                'orderId': 0,
+                'amount': 0,
+                'status': '',
+                'address': '',
             }
         },
         methods: {

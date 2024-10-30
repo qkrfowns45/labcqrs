@@ -19,6 +19,9 @@ public class Inventory {
 
     private Long stock;
 
+    @PostPersist
+    public void onPostPersist() {}
+
     public static InventoryRepository repository() {
         InventoryRepository inventoryRepository = InventoryApplication.applicationContext.getBean(
             InventoryRepository.class

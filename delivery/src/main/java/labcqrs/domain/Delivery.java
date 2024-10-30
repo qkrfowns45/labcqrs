@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import labcqrs.DeliveryApplication;
+import labcqrs.domain.DeliveryStarted;
 import lombok.Data;
 
 @Entity
@@ -21,9 +22,15 @@ public class Delivery {
 
     private String customerId;
 
-    private Integer quanity;
+    private Integer quantity;
 
     private Long orderId;
+
+    @PostPersist
+    public void onPostPersist() {
+        DeliveryStarted deliveryStarted = new DeliveryStarted(this);
+        deliveryStarted.publishAfterCommit();
+    }
 
     public static DeliveryRepository repository() {
         DeliveryRepository deliveryRepository = DeliveryApplication.applicationContext.getBean(

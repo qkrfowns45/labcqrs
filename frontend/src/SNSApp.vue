@@ -36,13 +36,13 @@
                 <v-list>
                     <v-list-item
                         class="px-2"
-                        key=""
-                        to="//"
+                        key="orders"
+                        to="/orders/orders"
                         @click="changeUrl()"
                         color="primary"
                         style="font-weight:700;"
                     >
-                        
+                        Order
                     </v-list-item>
 
 
@@ -150,10 +150,10 @@ export default {
         ImageUrl: '',
         aggregate: [
             { 
-                title: '', 
+                title: 'Order', 
                 description: '', 
-                key: '', 
-                route: '//',
+                key: 'orders', 
+                route: '/orders/orders',
                 ImageUrl: '',
             },
             { 
